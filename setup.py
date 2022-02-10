@@ -1,20 +1,27 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# 在开头加上 from __future__ import print_function 这句之后，即使在 python2.X，使用 print 就得像 python3.X 那样加括号使用。python2.X 中 print不需要括号，而在 python3.X 中则需要
 from __future__ import print_function
 
+# os.path 常用路径操作
+# warnings 警报相关方法
+# sys 系统相关方法
 import os.path
 import warnings
 import sys
 
+# 尝试使用 setuptools 分发工具，如果引入失败则引入 python 自带标准库分发工具 distutils。并设置 setuptools_available 标志是否 setuptools 可用
 try:
     from setuptools import setup, Command
     setuptools_available = True
 except ImportError:
     from distutils.core import setup, Command
     setuptools_available = False
+# spawn 在子进程中启动程序
 from distutils.spawn import spawn
 
+# 尝试引入 py2exe 这是一个将 python 脚本转换成 windows exe 的工具
 try:
     # This will create an exe that needs Microsoft Visual C++ 2008
     # Redistributable Package

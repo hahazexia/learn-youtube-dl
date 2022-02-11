@@ -144,11 +144,18 @@ setup(
     # test_suite = 'nose.collector',
     # test_requires = ['nosetest'],
 
+    # 包的分类信息
     classifiers=[
         'Topic :: Multimedia :: Video',
+        # 发展时期,常见的如下
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
+        # 许可证信息
         'License :: Public Domain',
+        # 目标 Python 版本
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
@@ -169,5 +176,5 @@ setup(
     ],
 
     cmdclass={'build_lazy_extractors': build_lazy_extractors}, # 自定义命令的别名 map 表
-    **params
+    **params # 其他所有 py2exe 参数
 )

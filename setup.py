@@ -49,11 +49,16 @@ py2exe_options = {
 }
 
 # Get the version from youtube_dl/version.py without importing the package
+# open 内置函数，打开 file 并返回对应的 file object。fileObject.read() 读取整个文件
+# compile 内置函数，将字符串编译成代码对象，代码对象可以被 exec 或者 eval 执行
+
+# 通过 youtube_dl/version.py 代码文件获取到版本号，而不需要引入整个包
 exec(compile(open('youtube_dl/version.py').read(),
              'youtube_dl/version.py', 'exec'))
 
 DESCRIPTION = 'YouTube video downloader'
 LONG_DESCRIPTION = 'Command-line program to download videos from YouTube.com and other video sites'
+
 
 py2exe_console = [{
     'script': './youtube_dl/__main__.py',
@@ -64,6 +69,9 @@ py2exe_console = [{
     'product_name': 'youtube-dl',
     'product_version': __version__,
 }]
+
+# console 需要转换成 控制台 exe 的脚本组成的 list
+# zipfile 生成的可分享的 zip 文件的名字；允许指定一个子目录；默认值是 library.zip。如果 zipfile 设置为 None，那么文件将会被打包到可执行文件中
 
 py2exe_params = {
     'console': py2exe_console,

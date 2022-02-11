@@ -31,12 +31,21 @@ except ImportError:
         print('Cannot import py2exe', file=sys.stderr)
         exit(1)
 
+# py2exe 会扩展 distutils 从而产生新的命令，在 setup.py 文件中引入 py2exe 后会添加新命令
+# 下面是一些 setup 方法参数 options.py2exe 中的参数
+    # bundle_files 将 dll 文件打包成 zip 文件或者 exe 文件。合法值： 3 = 不打包（默认值） 2 = 打包所有文件除了 python 解释器 1 = 打包所有文件包含 python 解释器
+    # compressed 布尔值 是否创建一个压缩 zip 文件
+    # optimize 字符串或整数，表示优化级别（0 1 或 2）0 = 不做优化（生成 .pyc 文件）1 = 普通优化（类似于 python -O）2 = 额外优化（类似 python -OO）查看 http://docs.python.org/distutils/apiref.html#module-distutils.util 更多信息
+    # dist_dir 最终文件输出的目录
+    # dll_excludes 需要排除在外的 dll 组成的 list
+
+# setup 方法参数 options.py2exe 参数
 py2exe_options = {
-    'bundle_files': 1,
-    'compressed': 1,
-    'optimize': 2,
-    'dist_dir': '.',
-    'dll_excludes': ['w9xpopen.exe', 'crypt32.dll'],
+    'bundle_files': 1, # 打包所有文件，包括 python 解释器
+    'compressed': 1, # 创建压缩 zip 文件
+    'optimize': 2, # 做最大额外优化
+    'dist_dir': '.', # 输出目录
+    'dll_excludes': ['w9xpopen.exe', 'crypt32.dll'], # 打包排除的文件组成的 list
 }
 
 # Get the version from youtube_dl/version.py without importing the package
@@ -106,21 +115,22 @@ class build_lazy_extractors(Command):
             dry_run=self.dry_run,
         )
 
+# https://setuptools.pypa.io/en/latest/references/keywords.html setuptools 官网文档
 setup(
-    name='youtube_dl',
-    version=__version__,
-    description=DESCRIPTION,
-    long_description=LONG_DESCRIPTION,
-    url='https://github.com/ytdl-org/youtube-dl',
-    author='Ricardo Garcia',
-    author_email='ytdl@yt-dl.org',
-    maintainer='Sergey M.',
-    maintainer_email='dstftw@gmail.com',
-    license='Unlicense',
+    name='youtube_dl', # 包名
+    version=__version__, # 版本号
+    description=DESCRIPTION, # 简单描述
+    long_description=LONG_DESCRIPTION, # 详细描述
+    url='https://github.com/ytdl-org/youtube-dl', # 官网地址
+    author='Ricardo Garcia', # 作者
+    author_email='ytdl@yt-dl.org', # 作者邮箱
+    maintainer='Sergey M.', # 维护者
+    maintainer_email='dstftw@gmail.com', # 维护者邮箱
+    license='Unlicense', # 许可证
     packages=[
         'youtube_dl',
         'youtube_dl.extractor', 'youtube_dl.downloader',
-        'youtube_dl.postprocessor'],
+        'youtube_dl.postprocessor'], # 需要处理的包目录(通常为包含 __init__.py 的文件夹)
 
     # Provokes warning on most systems (why?!)
     # test_suite = 'nose.collector',
@@ -150,6 +160,6 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
 
-    cmdclass={'build_lazy_extractors': build_lazy_extractors},
+    cmdclass={'build_lazy_extractors': build_lazy_extractors}, # 自定义命令的别名 map 表
     **params
 )

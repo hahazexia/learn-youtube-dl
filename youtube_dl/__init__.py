@@ -481,4 +481,6 @@ def main(argv=None):
         sys.exit('\nERROR: Interrupted by user')
 
 
+# 一般在 __init__.py 中指定 __all__ 来表示当这个模块被 import * from xxx 的时候, 有哪些模块会被 import 进来,
 __all__ = ['main', 'YoutubeDL', 'gen_extractors', 'list_extractors']
+
